@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="304workaround" content="2013-10-24 21:17:23">
+    <title>BookEZone</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles/style.css">
+    <style>
+        .alert {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navabar -->
+    <nav class="navBar">
+        <div class="logo commonNav">
+            <img src="./images/logo2.png" alt="logo" srcset="">
+        </div>
+        <div class="searchFunction commonNav">
+            <form class="navForm d_flex" id="searchForm">
+                <div class="inputDivSearch d_flex">
+                    <input type="text" name="searchInput" id="seacrhIp" placeholder="Search Book" onkeyup="searchFun()">
+                </div>
+                <div class="inputDivSearchBtn">
+                    {{!-- <input type="submit" value="Search" class="btn btn-outline-primary " id="inpFormBtnSearch"> --}}
+                </div>
+            </form>
+        </div>
+        <div class="userNameDiv commonNav">
+            <p>Welcome <span><strong>{{name}}</strong></span></p>
+
+        </div>
+        <div class="cartDiv commonNav">
+            {{# if logout}}
+            <button type="button" class="btn btn-outline-primary"><a href="/logout">Log Out</a></button>
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                data-bs-target="#addBookModal">Add Book</button>
+
+            {{!-- <button type="button" class="btn btn-outline-primary submitBtn"><a href="">Add Book</a></button> --}}
+            {{/if}}
+            <button type="button" class="btn btn-outline-primary submitBtn"><a href="/cart">My Cart</a></button>
+        </div>
+    </nav>
+
+    {{!-- Books Modal --}}
+    <!-- Modal -->
+    <!-- Button trigger modal -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="addBookModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Book</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-3" id="addBooksForm">
+                        <div class="col-12">
+                            <label for="bookTitle" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="bookTitle">
+                        </div>
+
+                        <div class="col-12">
+                            <label for="bookCategory" class="form-label">Category</label>
+                            <select class="form-select" id="bookCategory">
+                                <option selected disabled>Choose...</option>
+                                <option value="cricket">Cricket</option>
+                                <option value="economics">Economics</option>
+                                <option value="science">Science</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label for="bookDescription" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="bookDescription">
+                        </div>
+                        <div class="col-12">
+                            <label for="bookPrice" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="bookPrice">
+                        </div>
+                        <div class="modal-footer">
+                            <div class="alert alert-warning alert-dismissible fade show passwordAlert" role="alert">
+                                <h3 id="msgInAlert"></h3>
+                                <button type="button" class="btn-close myAlertBtn" onclick="myFun(this)"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="alert alert-success alert-dismissible fade show successAlert" role="alert">
+                                <h3 id="msgInAlertSuccess">Success</h3>
+                                <button type="button" class="btn-close myAlertBtn" onclick="myFun(this)"
+                                    aria-label="Close"></button>
+                            </div>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="Add Book">
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Books Container -->
+
+    <section class="container section_Books">
+        <div class="booksContainerHeading d_flex my-2">
+            <h2>Available Books</h2>
+        </div>
+        <div class="booksCategory d_flex my-2">
+            <div class="">
+                <label for="specificSizeSelect">Sort By Category</label>
+                <select class="form-select my-2" id="specificSizeSelect">
+                    <option selected disabled>All</option>
+                    <option value="az">A-Z</option>
+                    <option value="price">Price</option>
+                </select>
+            </div>
+        </div>
+        <div class="booksDiv my-3">
+            {{!-- <div id="msg">
+                <h1>No Data Found</h1>
+            </div> --}}
+
+            {{#each bookList}}
+            <div class="card" style="width: 18rem;">
+                <img src="./images/back.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{this.title}}</h5>
+                    <p class="card-text">Category: {{this.category}}</p>
+                    <p class="card-text">{{this.description}}</p>
+                    <h5 class="card-title">Price : {{this.price}}</h5>
+                    <a href="#" class="btn btn-primary">Add To Cart</a>
+                </div>
+            </div>
+            {{/each}}
+
+        </div>
+    </section>
+    <footer class="footer d_flex mt-2">
+        <p>Copyrights &copy; Reserved | Apurv Patel</p>
+    </footer>
+    <script>
+        function myFun(e) {
+            e.parentElement.style.display = "none";
+        }
+    </script>
+    <script>
+        const addBooksForm = document.getElementById("addBooksForm");
+        const searchForm = document.getElementById("searchForm");
+
+        function myAxios(method, url, body = null) {
+            const header = {
+                'Content-type': 'application/json',
+            }
+            return fetch(url, {
+                method: method,
+                headers: header,
+                body: JSON.stringify(body)
+            }).then((res) => {
+                return res.json();
+            })
+                .catch((err) => {
+                    console.log("Error");
+                })
+        }
+
+
+
+        addBooksForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            console.log("Button Clicked");
+
+            let bookTitle = document.querySelector("#bookTitle").value;
+            let bookDescription = document.querySelector("#bookDescription").value;
+            let bookCategory = document.querySelector("#bookCategory").value;
+            let bookPrice = document.querySelector("#bookPrice").value;
+            const msgInAlert = document.querySelector("#msgInAlert");
+            const msgInAlertSuccess = document.querySelector("#msgInAlertSuccess");
+            const passwordAlert = document.querySelector(".passwordAlert");
+            const successAlert = document.querySelector(".successAlert");
+
+            const url = "http://localhost:3000/books";
+            let data = {
+                title: bookTitle,
+                category: bookCategory,
+                description: bookDescription,
+                price: bookPrice,
+            }
+
+            myAxios('POST', url, data)
+                .then((res) => {
+                    if (res.success) {
+                        msgInAlertSuccess.innerHTML = '';
+                        document.querySelector("#bookTitle").value = '';
+                        document.querySelector("#bookDescription").value = '';
+                        document.querySelector("#bookCategory").value = '';
+                        document.querySelector("#bookPrice").value = '';
+
+                        msgInAlertSuccess.innerHTML = res.message;
+                        successAlert.style.display = 'block';
+                    }
+                    else {
+                        msgInAlert.innerHTML = res.message;
+                        passwordAlert.style.display = 'block';
+                    }
+                })
+                .catch((err) => {
+                    console.log(`Error: ${err}`);
+                });
+        });
+
+        function searchFun(){
+    
+            let searchValue = document.getElementById("seacrhIp").value.toLowerCase();
+            console.log(searchValue);
+
+            let arryOfCards = document.getElementsByClassName("card-body");
+            
+            for(let i =0 ;i<arryOfCards.length;i++){
+
+                if(arryOfCards[i].firstElementChild.innerHTML.toLocaleLowerCase().indexOf(searchValue) > -1 ){
+                    arryOfCards[i].parentElement.style.display = "";
+                }
+                else{
+                    arryOfCards[i].parentElement.style.display = "none";
+                
+                }
+            }
+        }
+
+    </script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

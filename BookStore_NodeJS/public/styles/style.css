@@ -1,0 +1,119 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+.d_flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+/* NavBar */
+
+.navBar{
+    display: flex;
+    width: 100%;
+    height: 10vh;
+    background-color: aquamarine;
+    align-items: center;
+}
+
+.logo{
+    width: 25%;
+}
+.logo img{
+    width: 100px;
+    margin-left: 20px;
+}
+.searchFunction{
+    width: 40%;
+}
+.navForm{
+    width: 100%;
+}
+.inputDivSearch{
+    width: 50%;
+    /* background: yellow; */
+}
+.inputDivSearchBtn{
+    /* background: blue; */
+    width: 50%;
+}
+#seacrhIp{
+    width: 80%;
+    padding: 5px;
+    font-size: 1rem;
+}
+/* .searchFunction input[type='submit']{
+    width: 30%;
+} */
+.userNameDiv{
+    width: 10%;
+    
+}
+.userNameDiv p{
+    margin: 0;
+    padding: 0;
+    font-size: 1.1rem;
+}
+.cartDiv{
+    width: 25%;
+    display: flex;
+    justify-content: flex-end;
+}
+.cartDiv .btn{
+    margin-right: 20px;
+}
+
+.inpFormBtnSearch{
+    width: 30%;
+    padding: 3px !important;
+}
+
+.btn{
+    /* width: 40%;
+    padding: 7px;
+    font-size: 1rem;
+    border-radius: 5px;
+    background-color: rgb(0, 89, 255);
+    color: #fff; */
+}
+a{
+    text-decoration: none;
+    color: rgb(72, 131, 227);
+}
+button:hover > a{
+    color: #fff;
+}
+
+/* Books Div */
+
+.booksDiv{
+    display: grid;
+    gap: 20px;
+    width: 90vw;
+    /* grid-template-columns: 1fr 1fr 1fr 1fr; */
+    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+    grid-template-rows: repeat(2,minmax(300px,1fr));
+}
+.booksDiv .card{
+    /* grid-gap: 10px; */
+}
+.booksDiv .btn{
+    width: 50%;
+}
+
+/* footer */
+
+.footer{
+    width: 100%;
+    height: 10vh;
+    background-color: aquamarine;
+    color: #000;
+}

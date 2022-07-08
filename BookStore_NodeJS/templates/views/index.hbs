@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Login || Registration Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/login_signUp.css">
+</head>
+
+<body>
+    <!-- Navabar -->
+    <nav class="navBar d_flex">
+        <div class="logo commonNav ">
+            <img src="./images/logo2.png" alt="logo" srcset="">
+        </div>
+    </nav>
+
+    <!-- Login_SignUp Section -->
+    <section class="login_signUp_section d_flex">
+        <div class="main d_flex">
+            <div class="img d_flex">
+                <img src="./images/login_pic2.svg" alt="" srcset="">
+                <h2>Welcome To BookEZone</h2>
+                
+                <div class="alert alert-warning alert-dismissible fade show passwordAlert" role="alert">
+                    <h3 id="msgInAlert"></h3>
+                    <button type="button" class="btn-close myAlertBtn" onclick="myFun(this)" aria-label="Close"></button>
+                </div>
+                <div class="alert alert-success alert-dismissible fade show successAlert" role="alert">
+                    <h3 id="msgInAlertSuccess"></h3>
+                    <button type="button" class="btn-close myAlertBtn" onclick="myFun(this)" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="wrapper ">
+                <div class="title-text">
+                    <div class="title login">
+                        Login Form
+                    </div>
+                    <div class="title signup">
+                        Signup Form
+                    </div>
+                </div>
+                <div class="form-container">
+                    <div class="slide-controls">
+                        <input type="radio" name="slide" id="login" checked>
+                        <input type="radio" name="slide" id="signup">
+                        <label for="login" class="slide login loginLabel">Login</label>
+                        <label for="signup" class="slide signup signUpLabel">Signup</label>
+                        <div class="slider-tab"></div>
+                    </div>
+                    <div class="form-inner">
+                        <form class="login" method="post" id="loginForm">
+                            <div class="field">
+                                <input type="text" placeholder="Email Address" id="uLoginemail" name="email" required>
+                            </div>
+                            <div class="field">
+                                <input type="password" placeholder="Password" id="uLoginpassword" name="password" required>
+                            </div>
+                            <div class="pass-link">
+                                <a href="#">Forgot password?</a>
+                            </div>
+                            <div class="field btn_form">
+                                <div class="btn-layer"></div>
+                                <input type="submit" value="Login">
+                            </div>
+                            <div class="signup-link">
+                                Not a member? <a href="">Signup now</a>
+                            </div>
+                        </form>
+                        <form class="signup" method="post" id="signUp">
+                            <div class="field">
+                                <input type="text" id="fName" name="fName" placeholder="First Name" required>
+                            </div>
+                            <div class="field">
+                                <input type="text" id="lName" name="lName" placeholder="Last Name" required>
+                            </div>
+                            <div class="field">
+                                <input type="email" id="uEmail" name="uEmail" placeholder="Email Address" required>
+                            </div>
+                            <div class="field">
+                                <input type="password" id="uPassword" name="uPassword" placeholder="Password" required>
+                            </div>
+                            <div class="field">
+                                <input type="password" id="uCPassword" name="uCPassword" placeholder="Confirm password"
+                                    required>
+                            </div>
+                            <div class="field btn_form">
+                                <div class="btn-layer"></div>
+                                <input type="submit" value="Signup">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    {{>footer}}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+
+    <script>
+        
+        function myFun(e){
+            console.log(e);
+            e.parentElement.style.display = "none";
+        }
+        
+        const loginText = document.querySelector(".title-text .login");
+        const loginForm = document.querySelector("form.login");
+        const loginBtn = document.querySelector("label.login");
+        const signupBtn = document.querySelector("label.signup");
+        const signupLink = document.querySelector("form .signup-link a");
+        
+
+        const signUpForm = document.getElementById("signUp");
+        const passwordAlert = document.querySelector(".passwordAlert");
+        const msgInAlert = document.querySelector("#msgInAlert");
+        const successAlert = document.querySelector(".successAlert");
+        const msgInAlertSuccess = document.querySelector("#msgInAlertSuccess");
+        const slider_tab = document.querySelector(".slider-tab");
+        const loginLabel = document.querySelector(".loginLabel");
+        const loginId = document.querySelector("#login");
+
+
+        function myAxios(method, url, body = null) {
+                const header = {
+                    'Content-type': 'application/json',
+                }
+                return fetch(url, {
+                    method: method,
+                    headers: header,
+                    body: JSON.stringify(body)
+                }).then((res) => {
+                    return res.json();
+                })
+                    .catch((err) => {
+                        console.log("Error");
+                    })
+            }
+
+        signUpForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            let fName = document.querySelector("#fName").value;
+            let lName = document.querySelector("#lName").value;
+            let uEmail = document.querySelector("#uEmail").value;
+            let uPassword = document.querySelector("#uPassword").value;
+            let uCPassword = document.querySelector("#uCPassword").value;
+
+            const url = "http://localhost:3000/register";
+            let data = {
+                firstname: fName,
+                lastname: lName,
+                email: uEmail,
+                password: uPassword,
+                confirmpassword: uCPassword
+            }
+
+            
+            myAxios('POST', url, data)
+                .then((res) => {
+                    if (res.success) {
+                        msgInAlertSuccess.innerHTML = '';
+                        {{!-- console.log("success"); --}}
+                        document.querySelector("#fName").value = '';
+                        document.querySelector("#lName").value = '';
+                        document.querySelector("#uEmail").value = '';
+                        document.querySelector("#uPassword").value = '';
+                        document.querySelector("#uCPassword").value = '';
+                        msgInAlertSuccess.innerHTML = res.message;
+                        successAlert.style.display = 'block';
+                        loginForm.style.marginLeft = "0%";
+                        loginText.style.marginLeft = "0%";
+                        loginId.checked = true;
+                    }   
+                    else{  
+                        {{!-- console.log("Fali"); --}}
+                        msgInAlert.innerHTML = res.message;
+                        passwordAlert.style.display = 'block';
+                    }
+                    {{!-- console.log(res); --}}
+                })
+                .catch((err) => {
+                    console.log(`Error: ${err}`);
+                });
+        })
+
+        loginForm.addEventListener("submit",(e)=>{
+            e.preventDefault();
+            let uLoginEmail = document.querySelector("#uLoginemail").value;
+            let uLoginPassword = document.querySelector("#uLoginpassword").value;
+
+            const loginUrl = "http://localhost:3000/login";
+            
+            
+            let loginData = {
+                email: uLoginEmail,
+                password: uLoginPassword,
+            }
+
+            
+            myAxios('POST', loginUrl, loginData)
+                .then((res) => {
+                    if (res.success) {
+                        {{!-- console.log("success"); --}}
+                        msgInAlertSuccess.innerHTML = '';
+                        msgInAlertSuccess.innerHTML = res.message;
+                        successAlert.style.display = 'block';
+                        setTimeout(()=>{
+                            window.location.href = "http://localhost:3000/books";
+                        },1000)
+                    }   
+                    else{  
+                        {{!-- console.log("Fail"); --}}
+                        msgInAlert.innerHTML = res.message;
+                        passwordAlert.style.display = 'block';
+                    }
+                    console.log(res);
+                })
+                .catch((err) => {
+                    console.log(`Error: ${err}`);
+                });
+
+
+
+        })
+        signupBtn.onclick = (() => {
+            loginForm.style.marginLeft = "-50%";
+            loginText.style.marginLeft = "-50%";
+        });
+        loginBtn.onclick = (() => {
+            loginForm.style.marginLeft = "0%";
+            loginText.style.marginLeft = "0%";
+        });
+        signupLink.onclick = (() => {
+            signupBtn.click();
+            return false;
+        });
+    </script>
+
+</body>
+
+</html>
